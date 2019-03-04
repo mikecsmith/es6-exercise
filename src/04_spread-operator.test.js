@@ -4,7 +4,7 @@
 describe('spread with arrays', () => {
 
   it('extracts each array item', () => {
-    const [b, a] = [...[1, 2]]
+    const [a, b] = [...[1, 2]]
 
     expect(a).toEqual(1)
     expect(b).toEqual(2)

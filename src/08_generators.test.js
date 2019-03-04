@@ -4,18 +4,18 @@
 describe('generator can be created in multiple ways', () => {
 
   it('the most common way is by adding `*` after `function`', () => {
-    function g() {}
+    function* g() {}
     assertIsGenerator(g())
   })
 
   it('as a function expression, by adding a `*` after `function`', () => {
-    let g = () => {}
+    let g = function* () {}
     assertIsGenerator(g())
   })
 
   it('inside an object by prefixing the function name with `*`', () => {
     let obj = {
-      g() {}
+      g: function* () {}
     }
     assertIsGenerator(obj.g())
   })
@@ -23,7 +23,7 @@ describe('generator can be created in multiple ways', () => {
   it('computed generator names, are just prefixed with a `*`', () => {
     const generatorName = 'g'
     let obj = {
-      [generatorName]() {}
+      *[generatorName]() {}
     }
     assertIsGenerator(obj.g())
   })
@@ -45,7 +45,7 @@ describe('generator - `yield` is used to pause and resume a generator function',
     yield 'world'
   }
 
-  let generator
+  let generator;
 
   beforeEach(() => {
     generator = generatorFunction()
@@ -54,13 +54,13 @@ describe('generator - `yield` is used to pause and resume a generator function',
   describe('after the first `generator.next()` call', () => {
 
     it('the value is "hello"', () => {
-      const {value} = generator.next
+      const {value} = generator.next();
       
       expect(value).toEqual('hello')
     })
 
     it('and `done` is false', () => {
-      const {done} = generator
+      const {done, value} = generator.next();
 
       expect(done).toEqual(false)
     })
